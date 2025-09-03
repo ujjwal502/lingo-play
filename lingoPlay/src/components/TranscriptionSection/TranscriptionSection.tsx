@@ -47,15 +47,6 @@ const TranscriptionSection = ({
     }
   };
 
-  // Format transcription segments for display
-  const formatTime = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `[${minutes.toString().padStart(2, "0")}:${secs
-      .toString()
-      .padStart(2, "0")}]`;
-  };
-
   return (
     <div className={styles.container}>
       <h3 className={styles.title}>Transcription & Summary</h3>
@@ -131,9 +122,6 @@ const TranscriptionSection = ({
                       <div className={styles.transcriptionText}>
                         {transcription.map((segment, index) => (
                           <p key={index} className={styles.transcriptionLine}>
-                            <span className={styles.timestamp}>
-                              {formatTime(segment.startTime)}
-                            </span>
                             {segment.text}
                             <span className={styles.confidence}>
                               ({Math.round(segment.confidence * 100)}%)

@@ -24,6 +24,7 @@
     "@google-cloud/speech": "^7.2.0",
     "@google-cloud/storage": "^7.17.0",
     "@google-cloud/text-to-speech": "^6.3.0",
+    "@google-cloud/vertexai": "^1.10.0",
     "@types/fluent-ffmpeg": "^2.1.27",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",

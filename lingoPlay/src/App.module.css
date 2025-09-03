@@ -48,6 +48,7 @@
     rgba(255, 255, 255, 0.9) 100%
   );
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: visible;
 }
 
 .section:hover {
@@ -57,17 +58,20 @@
 
 .transcriptionSection {
   flex: 0 0 auto;
-  height: 400px;
+  height: auto;
+  min-height: 380px;
 }
 
 .navigationSection {
   flex: 0 0 auto;
-  height: 420px;
+  height: auto;
+  min-height: 360px;
 }
 
 .videoGenerationSection {
   flex: 0 0 auto;
-  height: 500px;
+  height: auto;
+  min-height: 420px;
 }
 
 .sectionTitle {

@@ -8,6 +8,7 @@ import {
 } from "../types";
 import { videoStore } from "./videoController";
 import { wsConnections } from "../server";
+import vertexAiService from "../services/vertexAiService";
 
 // In-memory storage for transcription data
 const transcriptionStore = new Map<string, any>();
@@ -215,8 +216,14 @@ const processTranscription = async (
       }
     }
 
-    // Generate summary
-    const summary = generateSummary(fullText.trim());
+    // Generate summary (Vertex AI with heuristic fallback)
+    let summary = "";
+    try {
+      summary = await vertexAiService.summarizeText(fullText.trim());
+    } catch (aiError) {
+      console.warn("Vertex AI summarization failed, using fallback:", aiError);
+      summary = generateSummary(fullText.trim());
+    }
 
     // Store transcription data
     const transcriptionData = {
