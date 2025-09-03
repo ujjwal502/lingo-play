@@ -4,6 +4,7 @@ import {
   type TranscriptionSegment,
 } from "../../services/apiService";
 import styles from "./TranscriptionSection.module.css";
+import { FileText, Loader2, Sparkles, AlertCircle } from "lucide-react";
 
 interface TranscriptionSectionProps {
   videoId?: string;
@@ -53,7 +54,9 @@ const TranscriptionSection = ({
 
       {!videoId && (
         <div className={styles.placeholder}>
-          <div className={styles.placeholderIcon}>📝</div>
+          <div className={styles.placeholderIcon}>
+            <FileText size={48} strokeWidth={2} aria-hidden="true" />
+          </div>
           <p>Upload a video to see transcription and summary</p>
         </div>
       )}
@@ -76,7 +79,17 @@ const TranscriptionSection = ({
           {/* Show error message if any */}
           {error && (
             <div className={styles.errorMessage}>
-              <p>❌ {error}</p>
+              <p>
+                <AlertCircle
+                  size={16}
+                  style={{
+                    marginRight: "0.4rem",
+                    verticalAlign: "text-bottom",
+                  }}
+                  aria-hidden="true"
+                />
+                {error}
+              </p>
             </div>
           )}
 
@@ -92,7 +105,12 @@ const TranscriptionSection = ({
                 >
                   Transcription
                   {isTranscribing && (
-                    <span className={styles.loadingIndicator}>⏳</span>
+                    <span
+                      className={styles.loadingIndicator}
+                      aria-hidden="true"
+                    >
+                      <Loader2 size={14} className={styles.spinner} />
+                    </span>
                   )}
                 </button>
                 <button
@@ -103,7 +121,12 @@ const TranscriptionSection = ({
                 >
                   Summary
                   {isTranscribing && (
-                    <span className={styles.loadingIndicator}>⏳</span>
+                    <span
+                      className={styles.loadingIndicator}
+                      aria-hidden="true"
+                    >
+                      <Loader2 size={14} className={styles.spinner} />
+                    </span>
                   )}
                 </button>
               </div>
@@ -142,7 +165,17 @@ const TranscriptionSection = ({
                     {isTranscribing ? (
                       <div className={styles.loading}>
                         <div className={styles.spinner}></div>
-                        <p>Generating summary...</p>
+                        <p>
+                          <Sparkles
+                            size={14}
+                            style={{
+                              marginRight: "0.4rem",
+                              verticalAlign: "text-bottom",
+                            }}
+                            aria-hidden="true"
+                          />
+                          Generating summary...
+                        </p>
                       </div>
                     ) : summary ? (
                       <div className={styles.summaryText}>

@@ -4,6 +4,7 @@ import {
   type TranscriptionSegment,
 } from "../../services/apiService";
 import styles from "./NavigationSection.module.css";
+import { Clock, Search, X } from "lucide-react";
 
 interface NavigationSectionProps {
   videoId?: string;
@@ -117,7 +118,7 @@ const NavigationSection = ({
           }`}
           onClick={() => handleModeChange("seconds")}
         >
-          📍 Go to Seconds
+          <Clock size={16} strokeWidth={2} aria-hidden="true" /> Go to Seconds
         </button>
         <button
           className={`${styles.modeButton} ${
@@ -125,7 +126,7 @@ const NavigationSection = ({
           }`}
           onClick={() => handleModeChange("phrase")}
         >
-          🔍 Go to Phrase
+          <Search size={16} strokeWidth={2} aria-hidden="true" /> Go to Phrase
         </button>
       </div>
 
@@ -190,8 +191,12 @@ const NavigationSection = ({
       {searchResult && (
         <div className={styles.resultContainer}>
           <div className={styles.result}>{searchResult}</div>
-          <button onClick={clearResult} className={styles.clearButton}>
-            ✕
+          <button
+            onClick={clearResult}
+            className={styles.clearButton}
+            aria-label="Clear result"
+          >
+            <X size={16} strokeWidth={2} aria-hidden="true" />
           </button>
         </div>
       )}

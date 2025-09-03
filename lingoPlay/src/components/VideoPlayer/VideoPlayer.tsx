@@ -1,4 +1,12 @@
 import React, { useRef, useState, forwardRef } from "react";
+import {
+  Upload,
+  Hourglass,
+  XCircle,
+  Play as PlayIcon,
+  Pause as PauseIcon,
+  FileText,
+} from "lucide-react";
 import { apiService } from "../../services/apiService";
 import styles from "./VideoPlayer.module.css";
 
@@ -143,14 +151,16 @@ const VideoPlayer = forwardRef<VideoPlayerRef, VideoPlayerProps>(
               disabled={isUploading}
             />
             <label htmlFor="video-upload" className={styles.uploadLabel}>
-              <div className={styles.uploadIcon}>📹</div>
+              <div className={styles.uploadIcon}>
+                <Upload size={48} strokeWidth={2} aria-hidden="true" />
+              </div>
               <p>Click to upload video</p>
               <p className={styles.uploadHint}>
                 Supports MP4, WebM, OGV (Max 500MB)
               </p>
               {uploadedVideoData && (
                 <p className={styles.uploadSuccess}>
-                  ✅ Uploaded: {uploadedVideoData.filename}
+                  Uploaded: {uploadedVideoData.filename}
                 </p>
               )}
             </label>
@@ -159,7 +169,9 @@ const VideoPlayer = forwardRef<VideoPlayerRef, VideoPlayerProps>(
 
         {isUploading && (
           <div className={styles.uploadArea}>
-            <div className={styles.uploadIcon}>⏳</div>
+            <div className={styles.uploadIcon}>
+              <Hourglass size={40} strokeWidth={2} aria-hidden="true" />
+            </div>
             <p>Uploading video...</p>
             <p className={styles.uploadHint}>
               Please wait while your video uploads
@@ -169,7 +181,14 @@ const VideoPlayer = forwardRef<VideoPlayerRef, VideoPlayerProps>(
 
         {uploadError && (
           <div className={styles.errorMessage}>
-            <p>❌ Upload Error: {uploadError}</p>
+            <p>
+              <XCircle
+                size={18}
+                style={{ marginRight: "0.5rem", verticalAlign: "text-bottom" }}
+                aria-hidden="true"
+              />
+              Upload Error: {uploadError}
+            </p>
             <button
               onClick={() => {
                 setUploadError(null);
@@ -197,8 +216,16 @@ const VideoPlayer = forwardRef<VideoPlayerRef, VideoPlayerProps>(
             />
 
             <div className={styles.controls}>
-              <button onClick={handlePlayPause} className={styles.playButton}>
-                {isPlaying ? "⏸️" : "▶️"}
+              <button
+                onClick={handlePlayPause}
+                className={styles.playButton}
+                aria-label={isPlaying ? "Pause" : "Play"}
+              >
+                {isPlaying ? (
+                  <PauseIcon size={20} strokeWidth={2} aria-hidden="true" />
+                ) : (
+                  <PlayIcon size={20} strokeWidth={2} aria-hidden="true" />
+                )}
               </button>
 
               <div className={styles.progressContainer}>
@@ -218,8 +245,18 @@ const VideoPlayer = forwardRef<VideoPlayerRef, VideoPlayerProps>(
 
             {uploadedVideoData && (
               <div className={styles.uploadInfo}>
-                <p>📁 Video ID: {uploadedVideoData.videoId}</p>
-                <p>✅ Ready for transcription</p>
+                <p>
+                  <FileText
+                    size={16}
+                    style={{
+                      marginRight: "0.4rem",
+                      verticalAlign: "text-bottom",
+                    }}
+                    aria-hidden="true"
+                  />
+                  Video ID: {uploadedVideoData.videoId}
+                </p>
+                <p>Ready for transcription</p>
               </div>
             )}
           </div>

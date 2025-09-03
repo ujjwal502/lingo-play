@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { apiService } from "../../services/apiService";
+import { X, Download, User, Users } from "lucide-react";
 import styles from "./VideoGenerationSection.module.css";
 
 interface VideoGenerationSectionProps {
@@ -274,7 +275,7 @@ const VideoGenerationSection = ({
                 onClick={handleClearGeneration}
                 className={styles.clearButton}
               >
-                ✕
+                <X size={16} strokeWidth={2} aria-hidden="true" />
               </button>
             </div>
 
@@ -305,7 +306,8 @@ const VideoGenerationSection = ({
                   download="generated-video.mp4"
                   className={styles.downloadButton}
                 >
-                  📥 Download Video
+                  <Download size={16} strokeWidth={2} aria-hidden="true" />{" "}
+                  Download Video
                 </a>
               )}
               {generatedAudioUrl && (
@@ -315,7 +317,8 @@ const VideoGenerationSection = ({
                   className={styles.downloadButton}
                   style={{ marginLeft: generatedVideoUrl ? "1rem" : "0" }}
                 >
-                  🎵 Download Audio
+                  <Download size={16} strokeWidth={2} aria-hidden="true" />{" "}
+                  Download Audio
                 </a>
               )}
             </div>
