@@ -35,7 +35,6 @@ const TranscriptionSection = ({
       setError(null);
       onStartTranscription();
 
-      // Start transcription process
       await apiService.startTranscription(videoId);
 
       console.log("Transcription started successfully");
@@ -45,15 +44,6 @@ const TranscriptionSection = ({
         error instanceof Error ? error.message : "Failed to start transcription"
       );
     }
-  };
-
-  // Format transcription segments for display
-  const formatTime = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `[${minutes.toString().padStart(2, "0")}:${secs
-      .toString()
-      .padStart(2, "0")}]`;
   };
 
   return (
@@ -129,17 +119,7 @@ const TranscriptionSection = ({
                       </div>
                     ) : transcription.length > 0 ? (
                       <div className={styles.transcriptionText}>
-                        {transcription.map((segment, index) => (
-                          <p key={index} className={styles.transcriptionLine}>
-                            <span className={styles.timestamp}>
-                              {formatTime(segment.startTime)}
-                            </span>
-                            {segment.text}
-                            <span className={styles.confidence}>
-                              ({Math.round(segment.confidence * 100)}%)
-                            </span>
-                          </p>
-                        ))}
+                        <p>{transcription.map((s) => s.text).join(" ")}</p>
                       </div>
                     ) : (
                       <p className={styles.noContent}>
