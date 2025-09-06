@@ -100,14 +100,16 @@ app.use((req, res) => {
   res.status(404).json({ error: "Route not found" });
 });
 
-// Start server
-server.listen(PORT, () => {
-  console.log(`🚀 LingoPlay Backend running on port ${PORT}`);
-  console.log(
-    `📱 Frontend URL: ${process.env.FRONTEND_URL || "http://localhost:5173"}`
-  );
-  console.log(`🌐 WebSocket server ready for real-time updates`);
-  console.log(`📊 Health check: http://localhost:${PORT}/api/health`);
-});
+// Start server (skip when running tests)
+if (process.env.NODE_ENV !== "test") {
+  server.listen(PORT, () => {
+    console.log(`🚀 LingoPlay Backend running on port ${PORT}`);
+    console.log(
+      `📱 Frontend URL: ${process.env.FRONTEND_URL || "http://localhost:5173"}`
+    );
+    console.log(`🌐 WebSocket server ready for real-time updates`);
+    console.log(`📊 Health check: http://localhost:${PORT}/api/health`);
+  });
+}
 
 export default app;

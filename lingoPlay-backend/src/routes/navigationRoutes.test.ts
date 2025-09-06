@@ -62,6 +62,12 @@ describe("routes/navigationRoutes", () => {
     expect(res.body.timestamp).toBeGreaterThanOrEqual(5.3);
     expect(res.body.timestamp).toBeLessThan(6.0);
   });
+
+  it("POST /phrase returns 404 when phrase not found", async () => {
+    const res = await request(app)
+      .post("/api/navigation/phrase")
+      .send({ videoId: "nope", phrase: "missing" });
+    expect(res.status).toBe(404);
+    expect(res.body.success).toBe(false);
+  });
 });
-
-

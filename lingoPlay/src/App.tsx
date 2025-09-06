@@ -26,6 +26,7 @@ function App() {
   const [isTranscribing, setIsTranscribing] = useState(false);
 
   const videoPlayerRef = useRef<VideoPlayerRef>(null);
+  const videoSectionRef = useRef<HTMLDivElement>(null);
 
   /*
    * Establish a single WebSocket subscription for real-time progress
@@ -97,6 +98,10 @@ function App() {
   const handleNavigateToTime = (seconds: number) => {
     console.log("Navigate to time:", seconds);
     videoPlayerRef.current?.jumpToTime(seconds);
+    videoSectionRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   };
 
   const handleVideoGenerated = (videoUrl: string) => {
@@ -105,7 +110,7 @@ function App() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.leftPanel}>
+      <div className={styles.leftPanel} ref={videoSectionRef}>
         <VideoPlayer
           ref={videoPlayerRef}
           onVideoUploaded={handleVideoUploaded}
