@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { VideoGenerationSection } from "./VideoGenerationSection";
 
 const mocks = vi.hoisted(() => ({
@@ -51,24 +51,30 @@ describe("components/VideoGenerationSection", () => {
     expect(btn).not.toBeDisabled();
   });
 
-//   it("starts generation and polls for status", async () => {
-//     render(<VideoGenerationSection />);
-//     fireEvent.change(
-//       screen.getByPlaceholderText(/convert into a video with speech/i),
-//       { target: { value: "Test content" } }
-//     );
-//     fireEvent.click(screen.getByRole("button", { name: /Generate Video/i }));
+  it("starts generation and polls for status", async () => {
+    vi.useRealTimers();
+    const setIntervalSpy = vi
+      // @ts-ignore
+      .spyOn(global, "setInterval")
+      // @ts-ignore
+      .mockImplementation((cb: any) => {
+        cb();
+        return 1 as any;
+      });
 
-//     expect(mocks.generateVideoMock).toHaveBeenCalled();
+    render(<VideoGenerationSection />);
+    fireEvent.change(
+      screen.getByPlaceholderText(/convert into a video with speech/i),
+      { target: { value: "Test content" } }
+    );
+    fireEvent.click(screen.getByRole("button", { name: /Generate Video/i }));
 
-//     // advance polling timers and wait for async call to resolve
-//     vi.advanceTimersByTime(6000);
-//     await waitFor(() =>
-//       expect(mocks.getGenerationStatusMock).toHaveBeenCalled()
-//     );
+    expect(mocks.generateVideoMock).toHaveBeenCalled();
 
-//     vi.useRealTimers();
-//   });
+    await waitFor(() =>
+      expect(mocks.getGenerationStatusMock).toHaveBeenCalled()
+    );
+
+    setIntervalSpy.mockRestore();
+  });
 });
-
-

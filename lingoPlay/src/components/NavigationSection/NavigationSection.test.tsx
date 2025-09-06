@@ -65,7 +65,9 @@ describe("components/NavigationSection", () => {
     render(
       <NavigationSection
         videoId={undefined}
-        transcription={[{ text: "t", startTime: 0, endTime: 1, confidence: 1 }] as any}
+        transcription={
+          [{ text: "t", startTime: 0, endTime: 1, confidence: 1 }] as any
+        }
         onNavigateToTime={() => {}}
       />
     );
@@ -79,6 +81,32 @@ describe("components/NavigationSection", () => {
 
     expect(screen.getByText(/No video uploaded/i)).toBeInTheDocument();
   });
+
+  it("searches phrase successfully and calls onNavigateToTime", async () => {
+    const onNavigate = vi.fn();
+    const videoId = "v1";
+    render(
+      <NavigationSection
+        videoId={videoId}
+        transcription={
+          [
+            { text: "hello world", startTime: 0, endTime: 1, confidence: 1 },
+          ] as any
+        }
+        onNavigateToTime={onNavigate}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /Go to Phrase/i }));
+    fireEvent.change(
+      screen.getByPlaceholderText(/e\.g\., React development/i),
+      { target: { value: "world" } }
+    );
+    fireEvent.click(screen.getByRole("button", { name: /Find & Navigate/i }));
+
+    await waitFor(() =>
+      expect(mocks.navigateToPhraseMock).toHaveBeenCalledWith(videoId, "world")
+    );
+    await waitFor(() => expect(onNavigate).toHaveBeenCalled());
+  });
 });
-
-
