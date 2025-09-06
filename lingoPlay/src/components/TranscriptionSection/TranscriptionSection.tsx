@@ -1,10 +1,8 @@
 import { useState } from "react";
-import {
-  apiService,
-  type TranscriptionSegment,
-} from "../../services/apiService";
+import { apiService } from "../../services/apiService";
+import type { TranscriptionSegment } from "../../types/api";
 import styles from "./TranscriptionSection.module.css";
-import { FileText, Loader2, Sparkles, AlertCircle } from "lucide-react";
+import { FileText, Sparkles, AlertCircle } from "lucide-react";
 
 interface TranscriptionSectionProps {
   videoId?: string;
@@ -12,6 +10,7 @@ interface TranscriptionSectionProps {
   summary: string;
   isTranscribing: boolean;
   onStartTranscription: () => void;
+  showManualStart?: boolean;
 }
 
 const TranscriptionSection = ({
@@ -20,6 +19,7 @@ const TranscriptionSection = ({
   summary,
   isTranscribing,
   onStartTranscription,
+  showManualStart = true,
 }: TranscriptionSectionProps) => {
   const [activeTab, setActiveTab] = useState<"transcription" | "summary">(
     "transcription"
@@ -63,8 +63,8 @@ const TranscriptionSection = ({
 
       {videoId && (
         <>
-          {/* Show start button if no transcription exists */}
-          {!transcription.length && !isTranscribing && (
+          {/* Show start button if allowed and no transcription exists */}
+          {showManualStart && !transcription.length && !isTranscribing && (
             <div className={styles.startSection}>
               <p>Video uploaded successfully! Ready to transcribe.</p>
               <button
@@ -104,14 +104,6 @@ const TranscriptionSection = ({
                   onClick={() => setActiveTab("transcription")}
                 >
                   Transcription
-                  {isTranscribing && (
-                    <span
-                      className={styles.loadingIndicator}
-                      aria-hidden="true"
-                    >
-                      <Loader2 size={14} className={styles.spinner} />
-                    </span>
-                  )}
                 </button>
                 <button
                   className={`${styles.tab} ${
@@ -120,14 +112,6 @@ const TranscriptionSection = ({
                   onClick={() => setActiveTab("summary")}
                 >
                   Summary
-                  {isTranscribing && (
-                    <span
-                      className={styles.loadingIndicator}
-                      aria-hidden="true"
-                    >
-                      <Loader2 size={14} className={styles.spinner} />
-                    </span>
-                  )}
                 </button>
               </div>
 
