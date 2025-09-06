@@ -77,16 +77,16 @@ Notes:
 
 ### Local development
 
-1) Install dependencies for both projects
+1. Install dependencies for both projects
 
 ```bash
 cd lingoPlay-backend && npm install
 cd ../lingoPlay && npm install
 ```
 
-2) Configure environment files (`.env`) as above.
+2. Configure environment files (`.env`) as above.
 
-3) Start the backend
+3. Start the backend
 
 ```bash
 cd lingoPlay-backend
@@ -94,13 +94,39 @@ npm run dev
 # Backend: http://localhost:3001, WebSocket: ws://localhost:3001
 ```
 
-4) Start the frontend
+4. Start the frontend
 
 ```bash
 cd ../lingoPlay
 npm run dev
 # Frontend: http://localhost:5173
 ```
+
+### Testing
+
+Both apps ship with comprehensive unit/integration tests and coverage reports.
+
+- Frontend (`lingoPlay/`)
+
+  - Stack: Vitest + React Testing Library + jsdom
+  - Run tests:
+    - `npm run test` (watch)
+    - `npm run test:coverage` (HTML report under `lingoPlay/coverage/`)
+  - Highlights: component tests for `VideoPlayer`, `TranscriptionSection`, `NavigationSection`, `VideoGenerationSection`; service tests for `apiService`, `wsClient`.
+  - coverage is decent
+
+- Backend (`lingoPlay-backend/`)
+  - Stack: Vitest + Supertest
+  - Run tests:
+    - `npm run test` (watch)
+    - `npm run test:coverage` (HTML report under `lingoPlay-backend/coverage/`)
+  - Highlights: route/controller tests for navigation, transcription, video generation (including D‑ID path), server health, and utility tests.
+  - coverage is decent
+
+Notes:
+
+- Coverage numbers may vary by environment; generate fresh reports with the coverage scripts above.
+- The backend test runner avoids binding a port by skipping `server.listen` when `NODE_ENV=test`.
 
 ### End‑to‑end user flow
 
@@ -143,5 +169,3 @@ npm run dev
 ### License
 
 MIT (see individual files and headers where applicable).
-
-
