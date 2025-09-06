@@ -13,7 +13,6 @@ LingoPlay is a video transcription, summarization, intelligent navigation, and s
 lingo-play/
   lingoPlay-backend/     # Node.js + Express + TypeScript API server
   lingoPlay/             # React + TypeScript + Vite frontend
-  assignment.txt         # Original assignment brief and requirements
 ```
 
 ### What LingoPlay delivers
