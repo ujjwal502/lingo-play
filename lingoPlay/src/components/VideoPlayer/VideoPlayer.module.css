@@ -42,6 +42,29 @@
   overflow: hidden;
 }
 
+.loadingArea {
+  gap: 0.75rem;
+}
+
+.loadingRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--gray-800);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.loadingTitle {
+  letter-spacing: 0.2px;
+}
+
+.loadingSub {
+  margin: 0;
+  color: var(--gray-500);
+  font-size: 0.95rem;
+}
+
 .uploadArea::before {
   content: "";
   position: absolute;

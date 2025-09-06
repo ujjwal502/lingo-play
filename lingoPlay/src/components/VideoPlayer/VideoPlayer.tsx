@@ -169,12 +169,12 @@ const VideoPlayer = forwardRef<VideoPlayerRef, VideoPlayerProps>(
         )}
 
         {isUploading && (
-          <div className={styles.uploadArea}>
-            <div className={styles.uploadIcon}>
-              <Hourglass size={40} strokeWidth={2} aria-hidden="true" />
+          <div className={`${styles.uploadArea} ${styles.loadingArea}`}>
+            <div className={styles.loadingRow} role="status" aria-live="polite">
+              <Hourglass size={28} strokeWidth={2} aria-hidden="true" />
+              <span className={styles.loadingTitle}>Uploading video...</span>
             </div>
-            <p>Uploading video...</p>
-            <p className={styles.uploadHint}>
+            <p className={styles.loadingSub}>
               Please wait while your video uploads
             </p>
           </div>
